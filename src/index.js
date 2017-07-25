@@ -1,4 +1,8 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 
+import App from './components/App';
 import './static/images/favicon.ico';
+import './style.scss';
 
-console.log('hello world');
+ReactDOM.render(<App />, document.getElementById('root'));
