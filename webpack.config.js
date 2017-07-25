@@ -1,6 +1,3 @@
-// import webpack from 'webpack';
-// import path from 'path';
-// import HtmlWebpackPlugin from 'html-webpack-plugin';
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -22,14 +19,6 @@ const config = {
   module: {
     loaders: [
       {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        loader: [
-          'style-loader',
-          'css-loader'
-        ]
-      },
-      {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         loader: [
@@ -37,8 +26,32 @@ const config = {
         ]
       },
       {
-        test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+        test: /\.(css|scss)$/,
+        exclude: /node_modules/,
+        loader: [
+          'style-loader',
+          'css-loader',
+          'sass-loader'
+        ]
+      },
+      {
+        test: /\.jpe?g$|\.ico$|\.gif$|\.png$|\.wav$|\.mp3$/,
         loader: 'file-loader?name=[name].[ext]'
+      },
+      {
+        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=application/octet-stream'
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file'},
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=image/svg+xml'
       }
     ]
   },
