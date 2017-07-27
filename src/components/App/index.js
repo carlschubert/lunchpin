@@ -11,6 +11,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       googleMap: {},
+      currentMap: {},
       venues: [],
       latLng: [40.736191, -74.030516],
       radius: 500,
@@ -18,6 +19,7 @@ export default class App extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.setVenues = this.setVenues.bind(this);
+    this.setMap = this.setMap.bind(this);
   }
 
   componentDidMount() {
@@ -32,22 +34,29 @@ export default class App extends Component {
     });
   }
 
+  setMap(map) {
+    this.setState({
+      currentMap: map
+    });
+  }
+
   setVenues(places) {
     this.setState({
       venues: places
     });
   }
 
-  handleSubmit(event) {
-    console.warn('latLng, radius',event)
-    // this.setState({
-    //   latLng: latLng,
-    //   radius: radius
-    // });
+  handleSubmit(place, radius) {
+    let lat = place.geometry.location.lat();
+    let lng = place.geometry.location.lng();
+    this.setState({
+      latLng: [lat, lng],
+      radius: radius
+    });
   }
 
   render() {
-    const {googleMap, latLng, radius, isLoaded, venues, handleSubmit} = this.state;
+    const {googleMap, latLng, radius, isLoaded, venues, handleSubmit, setMap, currentMap} = this.state;
     return (
       <div id="app" className="clearfix">
         <Map
@@ -55,11 +64,13 @@ export default class App extends Component {
           latLng={latLng}
           radius={radius}
           isLoaded={isLoaded}
-          setVenues={this.setVenues} />
+          setVenues={this.setVenues}
+          setMap={this.setMap} />
         <ListPanels
           venues={venues}
           googleMap={googleMap}
-          handleSubmit= {this.handleSubmit} />
+          handleSubmit= {this.handleSubmit}
+          currentMap={currentMap} />
       </div>
     );
   }

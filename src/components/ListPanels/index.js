@@ -4,7 +4,7 @@ import SearchForm from '../SearchForm';
 import ListRestaurants from '../ListRestaurants';
 
 const ListPanels = (props) => {
-  const {googleMap, venues, handleSubmit} = props;
+  const {googleMap, venues, handleSubmit, currentMap} = props;
   return (
     <div className="list-panels col-sm-4 col-lg-3">
       <div className="brand-header">
@@ -13,7 +13,8 @@ const ListPanels = (props) => {
       </div>
       <SearchForm
         googleMap={googleMap}
-        handleSubmit= {handleSubmit} />
+        handleSubmit= {handleSubmit}
+        currentMap={currentMap} />
       <ListRestaurants
         venues={venues} />
     </div>

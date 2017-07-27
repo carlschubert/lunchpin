@@ -4,12 +4,15 @@ export default class Map extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.googleMap !== this.props.googleMap) {
       this.loadMap();
+    } else if (prevProps.latLng !== this.props.latLng) {
+      this.loadMap();
+    } else if (prevProps.radius !== this.props.radius) {
+      this.loadMap();
     }
   }
 
   loadMap() {
-    const {googleMap, latLng, radius, setVenues} = this.props;
-
+    const {googleMap, latLng, radius, setVenues, setMap} = this.props;
     // initialize new google maps LatLng object
     const myLatlng = new googleMap.LatLng(...latLng);
     // set the map options hash
@@ -19,13 +22,15 @@ export default class Map extends Component {
       mapTypeId: googleMap.MapTypeId.ROADMAP
     };
     const map = new googleMap.Map(this.map, mapOptions);
+    setMap(map);
     // Add the marker to the map
     const myLoc = new googleMap.Marker({
       position: myLatlng,
-      title: 'Noteworth'
+      title: 'Current Location',
+      label: 'A'
     });
 
-    var request = {
+    let request = {
       location: myLatlng,
       radius: radius,
       type: ['restaurant']
@@ -33,15 +38,18 @@ export default class Map extends Component {
     let service = new googleMap.places.PlacesService(map);
     service.nearbySearch(request, (places, status) => {
       if (status === 'OK') {
-        places.forEach(place => {
+        // limit to 10 results
+        places.splice(10);
+        places.forEach((place, index) => {
           let marker = new googleMap.Marker({
             position: place.geometry.location,
             map: map,
-            title: place.name
+            title: place.name,
+            label: (index + 1).toString()
           });
           marker.setMap(map);
         });
-        setVenues(places)
+        setVenues(places);
       }
     });
     // Add the marker to the map by calling setMap()
