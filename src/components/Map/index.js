@@ -1,7 +1,15 @@
 import React, {Component} from 'react';
 
 export default class Map extends Component {
-  loadMap(googleMap, latLng) {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.googleMap !== this.props.googleMap) {
+      this.loadMap();
+    }
+  }
+
+  loadMap() {
+    const {googleMap, latLng, radius, setVenues} = this.props;
+
     // initialize new google maps LatLng object
     const myLatlng = new googleMap.LatLng(...latLng);
     // set the map options hash
@@ -12,21 +20,35 @@ export default class Map extends Component {
     };
     const map = new googleMap.Map(this.map, mapOptions);
     // Add the marker to the map
-    const marker = new googleMap.Marker({
+    const myLoc = new googleMap.Marker({
       position: myLatlng,
       title: 'Noteworth'
     });
+
+    var request = {
+      location: myLatlng,
+      radius: radius,
+      type: ['restaurant']
+    };
+    let service = new googleMap.places.PlacesService(map);
+    service.nearbySearch(request, (places, status) => {
+      if (status === 'OK') {
+        places.forEach(place => {
+          let marker = new googleMap.Marker({
+            position: place.geometry.location,
+            map: map,
+            title: place.name
+          });
+          marker.setMap(map);
+        });
+        setVenues(places)
+      }
+    });
     // Add the marker to the map by calling setMap()
-    marker.setMap(map);
+    myLoc.setMap(map);
   }
 
   render() {
-    const {map, latLng} = this.props;
-
-    if (Object.keys(map).length > 0) {
-      this.loadMap(map, latLng);
-    }
-
     return (
       <div className="map-container col-sm-8 col-lg-9">
         <div>
