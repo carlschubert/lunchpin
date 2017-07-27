@@ -14,8 +14,10 @@ const config = {
   entry: APP_DIR + '/index.js',
   output: {
     path: BUILD_DIR,
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    sourceMapFilename: 'bundle.map'
   },
+  devtool: '#source-map',
   module: {
     loaders: [
       {
