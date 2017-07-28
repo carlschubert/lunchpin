@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
 
 export default class Map extends Component {
+  componentDidMount() {
+    if (Object.keys(this.props.currentMap).length > 0) {
+      this.loadMap();
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.googleMap !== this.props.googleMap) {
       this.loadMap();
@@ -12,7 +18,7 @@ export default class Map extends Component {
   }
 
   loadMap() {
-    const {googleMap, latLng, radius, setVenues, setMap} = this.props;
+    const {googleMap, latLng, radius, setVenues, currentMap, setMap} = this.props;
     // initialize new google maps LatLng object
     const myLatlng = new googleMap.LatLng(...latLng);
     // set the map options hash
@@ -59,9 +65,7 @@ export default class Map extends Component {
   render() {
     return (
       <div className="map-container col-sm-8 col-lg-9">
-        <div>
-          <div id="map-canvas" ref={(map) => { this.map = map; }}></div>
-        </div>
+        <div id="map-canvas" ref={(map) => { this.map = map; }}></div>
       </div>
     );
   }
