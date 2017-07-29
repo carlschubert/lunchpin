@@ -67,7 +67,7 @@ export default class App extends Component {
     return (
       <div id="app" className="clearfix">
         {Object.keys(currentPlace).length > 0
-          ? <DetailRestaurant place={currentPlace} setPlace={this.setPlace} />
+          ? <DetailRestaurant place={currentPlace} venues={venues} setPlace={this.setPlace} />
           : <Map
             googleMap={googleMap}
             latLng={latLng}

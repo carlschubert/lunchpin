@@ -56,7 +56,7 @@ export default class SearchForm extends Component {
               name='radius'
               value={this.state.value}
               onChange={this.changeRadius}
-              placeholder='max distance'/>
+              placeholder='max distance (meters)'/>
             <button
               onClick={() => handleSubmit(newPlace, radius)}>Update Search</button>
           </div>
