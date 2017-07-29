@@ -56,7 +56,6 @@ export default class ScatterPlot extends Component {
   }
 
   render() {
-    const { height, width } = this.props;
     return (
       <div className='panel panel-default'>
         <svg
