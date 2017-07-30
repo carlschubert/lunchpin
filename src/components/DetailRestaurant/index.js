@@ -8,8 +8,6 @@ const WIDTH = 300;
 const SingleRestaurant = (props) => {
   const {place, setPlace, venues} = props;
 
-  console.log('place',place)
-
   return (
     <div className="list-panels col-sm-8 col-lg-9">
       <div className="restaurant-detail col-sm-6">
