@@ -41,7 +41,7 @@ export default class SearchForm extends Component {
     const {googleMap, handleSubmit} = this.props;
     const {address, radius, newPlace} = this.state;
     return (
-      <div>
+      <div className="search-form">
         <SinglePanel title="Search">
           <div className='search-form-details'>
             <input
@@ -57,7 +57,7 @@ export default class SearchForm extends Component {
               value={this.state.value}
               onChange={this.changeRadius}
               placeholder='max distance (meters)'/>
-            <button
+            <button className="btn btn-default"
               onClick={() => handleSubmit(newPlace, radius)}>Update Search</button>
           </div>
         </SinglePanel>
